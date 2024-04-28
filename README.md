@@ -16,28 +16,22 @@ Made with 💚 by Daniel Rayo
 
 ### Backend 🔌
 
-1. **Create the DB:** The backend requires a functional Docker Container with postgres, for that, you must create it from the dockerfile in the repo.<u> Important: This will need to be done only once.</u>
+1. **Create the DB:** The backend requires a functional Docker Container with postgres, for that, use docker compose as follow.</u>
    
    ```bash
-   cd ./backend
-   docker build -t brushwire-blog -f ./Dockerfile .
-   docker run --name brushwire -p 5433:5432 -d brushwire-blog:latest
+   docker compose up // Creates containers and start it
+   docker compose down // Stop containers
+   docker compose down -v // Stop containers and delete DB data
    ```
 
-2. **Run the container**: In order or the API to communicate with the DB, the container must be running, for that execute:
-   
-   ```bash
-   docker start brushwire
-   ```
-
-3. **Install dependencies:** Now install the dependencies
+2. **Install dependencies:** Now install the dependencies
    
    ```bash
    npm install    # if using npm
    yarn install   # if using yarn
    ```
 
-4. **Set environment variables:** The API extract important configuration from environment variables declared in a `.env` file. Create one within /backend directory with this variables. You can change them to your like.
+3. **Set environment variables:** The API extract important configuration from environment variables declared in a `.env` file. Create one within /backend directory with this variables. You can change them to your like.
    
    ```bash
    PORT=3000
@@ -46,7 +40,7 @@ Made with 💚 by Daniel Rayo
    STORE_DIR='/path/to/folder/where/blog/files/are/stored'
    ```
 
-5. **Start API:** Finally you can start the API service by executing:
+4. **Start API:** Finally you can start the API service by executing:
    
    ```bash
    npm start      # if using npm
@@ -58,7 +52,5 @@ Made with 💚 by Daniel Rayo
 ### Frontend 💫
 
 For now the only way to preview the frontend. Is by running liveServer extension within `./frontend/index.html` 
-
-
 
 > Its a work in progress...
