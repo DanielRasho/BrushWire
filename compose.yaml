@@ -1,0 +1,19 @@
+name: brushwire
+
+services:
+  database:
+    image: postgres
+    restart: always
+    ports: 
+      - 5433:5432
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=brushwire
+    volumes:
+      - ./database/:/docker-entrypoint-initdb.d/
+      - postgres_data:/apps/postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    driver: local
