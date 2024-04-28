@@ -1,14 +1,24 @@
 const { Pool } = require("pg");
+const Logger = require("./Logger");
 
 const DB_POOL = new Pool({
-  host: "localhost",
+  host: process.env.DB_HOST,
   user: "admin",
   password: "1234",
-  port: 5433,
+  port: process.env.DB_PORT,
   database: "brushwire",
   max: 10,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 1000,
+});
+
+// Checking connection
+DB_POOL.query("SELECT NOW()", (err, res) => {
+  if (err) {
+    Logger.error("Error connecting to the database", err);
+  } else {
+    Logger.info("Connected to the database");
+  }
 });
 
 /**
