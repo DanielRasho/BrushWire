@@ -23,7 +23,7 @@ const loggerMiddleware = (req, res, next) => {
       response: { status: res.statusCode, body },
     });
 
-    originalSend.call(this, body);
+    originalSend.call(res, body);
   };
 
   next();

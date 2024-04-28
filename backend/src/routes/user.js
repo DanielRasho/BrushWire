@@ -1,7 +1,7 @@
 const express = require("express");
 const Logger = require("../Logger");
 const { createToken, authenticateToken } = require("../authentication");
-const { pool, existOnlyOne } = require("../db");
+const { DB_POOL, existOnlyOne } = require("../db");
 const User = require("../models/user");
 const PostDetails = require("../models/postDetails");
 const fileManager = require("../fileManager");
@@ -10,7 +10,7 @@ const Post = require("../models/post");
 const userRouter = express.Router();
 
 userRouter.get("/", authenticateToken, async (req, res) => {
-  const DBData = await pool.query(
+  const DBData = await DB_POOL.query(
     `SELECT username, password 
     FROM member WHERE username = $1::text`,
     [req.user],
@@ -20,7 +20,7 @@ userRouter.get("/", authenticateToken, async (req, res) => {
 });
 
 userRouter.get("/posts", authenticateToken, async (req, res) => {
-  const DBData = await pool.query(
+  const DBData = await DB_POOL.query(
     `SELECT 
       id,
       author,
@@ -56,7 +56,7 @@ userRouter.get("/posts/:id", async (req, res) => {
     return res.status(400).json({ message: "Post id not sended." });
   }
 
-  const response = await pool.query(
+  const response = await DB_POOL.query(
     `
   SELECT 
   id,
@@ -99,7 +99,7 @@ userRouter.post("/posts", authenticateToken, async (req, res) => {
   }
 
   const postExist = await existOnlyOne(
-    pool,
+    DB_POOL,
     `SELECT * FROM post WHERE author = $1::text AND title = $2::text`,
     [req.user, title],
   );
@@ -109,7 +109,7 @@ userRouter.post("/posts", authenticateToken, async (req, res) => {
   } else {
     const thumbnailPath = fileManager.saveImage(req.user, title, thumbnail);
     const contentPath = fileManager.saveDocument(req.user, title, content);
-    await pool.query(
+    await DB_POOL.query(
       ` 
     INSERT INTO post (author, title, tags, thumbnail_path, content_path)
     VALUES ($1::text, $2::text, $3::text, $4::text, $5::text)`,
@@ -128,7 +128,7 @@ userRouter.put("/posts", authenticateToken, async (req, res) => {
   }
 
   const DBauthor = await (
-    await pool.query(`SELECT author FROM post WHERE id = $1`, [post.id])
+    await DB_POOL.query(`SELECT author FROM post WHERE id = $1`, [post.id])
   ).rows[0].author;
 
   if (req.user !== DBauthor) {
@@ -137,7 +137,7 @@ userRouter.put("/posts", authenticateToken, async (req, res) => {
       .json({ message: "You cannot edit post that are not yours." });
   }
 
-  await pool.query(
+  await DB_POOL.query(
     ` 
     UPDATE post SET 
     tags = $1::text,
@@ -162,7 +162,7 @@ userRouter.delete("/posts/:id", authenticateToken, async (req, res) => {
   }
 
   const DBPost = (
-    await pool.query(`SELECT author FROM post WHERE id=$1`, [postId])
+    await DB_POOL.query(`SELECT author FROM post WHERE id=$1`, [postId])
   ).rows[0];
 
   if (!DBPost) {
@@ -175,7 +175,7 @@ userRouter.delete("/posts/:id", authenticateToken, async (req, res) => {
       .status(400)
       .json({ message: "User most be author of the edited post" });
   }
-  await pool.query(`DELETE FROM post WHERE id = $1`, [postId]);
+  await DB_POOL.query(`DELETE FROM post WHERE id = $1`, [postId]);
   return res.status(200).json({ message: "Post deleted" });
 });
 

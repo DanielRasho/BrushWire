@@ -1,7 +1,7 @@
 const express = require("express");
 const Logger = require("../Logger");
 const { createToken, authenticateToken } = require("../authentication");
-const { pool } = require("../db");
+const { DB_POOL } = require("../db");
 const User = require("../models/user");
 
 const loginRouter = express.Router();
@@ -13,7 +13,7 @@ loginRouter.post("/", async (req, res) => {
     return res.status(401).json({ message: "Username or password not send" });
   }
 
-  const DBData = await pool.query(
+  const DBData = await DB_POOL.query(
     "SELECT password FROM member WHERE username = $1::text",
     [username],
   );
