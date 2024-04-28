@@ -1,0 +1,48 @@
+{
+  "name": "brushwire",
+  "version": "1.0.0",
+  "description": "A blog for artists.",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx eslint '**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "prettier '**/*.{js,jsx,ts,tsx}' --check",
+    "prettier:fix": "npm run prettier -- --write",
+    "format": "npm run prettier:fix && npm run lint:fix",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DanielRasho/BrushWire.git"
+  },
+  "keywords": [
+    "Blog",
+    "Art",
+    "React"
+  ],
+  "author": "DanielRasho",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanielRasho/BrushWire/issues"
+  },
+  "homepage": "https://github.com/DanielRasho/BrushWire#readme",
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": "npm run format"
+  }
+}
