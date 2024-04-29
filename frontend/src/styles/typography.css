@@ -1,0 +1,48 @@
+
+* {
+    font-family: 'DM Sans' ,Arial, Helvetica, sans-serif;
+}
+
+.font-display{
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.font-subDisplay{
+    font-size: 3rem;
+    font-family: 'Noto Serif', 'Times New Roman', Times, serif;
+    font-weight: 400;
+}
+
+.font-title{
+    font-size: 1.1rem;
+    font-family: 'Noto Serif', 'Times New Roman', Times, serif;
+}
+
+.font-btn{
+    font-size: 1.1rem;
+}
+
+.font-card-title{
+    font-size: 1.5rem;
+    font-weight:600;
+}
+
+.font-card-tag{
+    font-size: 0.9rem;
+    font-weight: 300;
+}
+
+.font-text{
+    font-size: 1.1rem;    
+}
+
+.font-btn-simple{
+    font-weight: lighter;
+    font-size: 0.7rem;
+}
+
+.font-btn-confirmation{
+    font-weight: bold;
+    font-size: 1rem;
+}

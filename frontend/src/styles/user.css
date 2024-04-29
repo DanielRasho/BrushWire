@@ -1,0 +1,72 @@
+
+.user-dashboard{
+    display: grid;
+    margin: 0;
+    grid-template-columns: 30ch 1fr;
+    height: 100vh;
+    width: 100vw;
+}
+
+.user-sidebar{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10ch 1fr;
+    background-color: white;
+    overflow: scroll;
+}
+
+.logo-container {
+    width: 100%;
+    padding: 3ch;
+    border-bottom: 1px solid rgb(211, 211, 211);
+}
+
+.logo-container img {
+    width: 100%;
+    cursor: pointer;
+}
+
+.user-sidebar .categories-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-sidebar .categories-container button{
+    border-bottom: 1px solid rgb(211, 211, 211);
+    height: fit-content;
+    padding: 2ch;
+    transition: all ease-in-out 0.2s;
+}
+
+.user-sidebar .categories-container button:hover{
+    background-color: rgb(211, 212, 211);
+}
+
+.posts-category-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4rem;
+}
+
+.posts-category-header button{
+    border: 2px solid var(--blue-300);
+    color: var(--blue-300);
+    padding: 1rem;
+    border-radius: 1rem;
+    transition: all ease-in 0.2s;
+}
+
+.posts-category-header button:hover{
+    background-color: var(--blue-300);
+    border-radius: 1.2rem;
+    color: white;
+}
+
+.posts-category-header button i {
+    margin-left: 1ch;
+}
+
+.posts-container {
+    padding: 0 4rem;
+}

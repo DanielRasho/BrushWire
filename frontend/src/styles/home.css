@@ -1,0 +1,52 @@
+.home-header{
+    font-size: 2.5rem;
+    width: 100%;
+    text-align: center;
+    padding: 6ch 0 5ch;
+    position: relative;
+}
+
+.home-header .gradient-container {
+    max-width: 120rem;
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-header .gradient-container img {
+    filter: blur(6px);
+    width: 100%;
+    max-width: 70rem;
+    opacity: 0.8;
+    transform: translateX(10%);
+}
+
+.home-header h1 {
+    position: relative;
+    z-index: 5;
+}
+
+.post-container {
+    width: 75vw;
+    margin: 0 auto 7ch;
+    display: grid;
+    gap: 3ch;
+}
+
+@media (min-width: 900px) {
+    .post-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (min-width: 1500px) {
+    .post-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
