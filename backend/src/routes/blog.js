@@ -25,7 +25,6 @@ blogRouter.get("/", async (req, res) => {
   // Fetching all posts from user
   const posts = DBData.rows.map((row) => {
     const { id, author, title, tags, publishdate, thumbnailpath } = row;
-    console.log(publishdate);
     return new PostDetails(
       id,
       title,
