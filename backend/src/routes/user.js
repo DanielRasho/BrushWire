@@ -26,23 +26,23 @@ userRouter.get("/posts", authenticateToken, async (req, res) => {
       author,
       title,
       tags, 
-      publish_date, 
-      thumbnail_path
+      publishdate, 
+      thumbnailpath
       FROM post WHERE author = $1::text 
-      ORDER BY publish_date desc`,
+      ORDER BY publishDate desc`,
     [req.user],
   );
 
   // Fetching all posts from user
   const posts = DBData.rows.map((row) => {
-    const { id, author, title, tags, publishDate, thumbnailPath } = row;
+    const { id, author, title, tags, publishdate, thumbnailpath } = row;
     return new PostDetails(
       id,
       title,
       author,
       tags.split(","),
-      publishDate,
-      fileManager.searchImage(thumbnailPath),
+      publishdate,
+      fileManager.searchImage(thumbnailpath),
     );
   });
 
@@ -63,28 +63,28 @@ userRouter.get("/posts/:id", async (req, res) => {
   author,
   title,
   tags,
-  publish_date,
-  thumbnail_path,
-  content_path
+  publishdate,
+  thumbnailpath,
+  contentpath
   FROM post WHERE id = $1`,
     [postId],
   );
 
-  if (response.rows === 0) {
+  if (response.rowCount === 0) {
     return res
       .status(400)
       .json({ message: `Post with id ${postId} does not exist` });
   }
-  const { id, author, title, tags, publishDate, thumbnailPath, contentPath } =
+  const { id, author, title, tags, publishdate, thumbnailpath, contentpath } =
     response.rows[0];
   const post = new Post(
     id,
     author,
     title,
     tags.split(","),
-    publishDate,
-    fileManager.searchImage(thumbnailPath),
-    fileManager.searchDocument(contentPath),
+    publishdate,
+    fileManager.searchImage(thumbnailpath),
+    fileManager.searchDocument(contentpath),
   );
   return res.status(200).json({ message: "Post found", post });
 });
@@ -107,13 +107,13 @@ userRouter.post("/posts", authenticateToken, async (req, res) => {
   if (postExist) {
     res.status(400).json({ message: "Post already exist" });
   } else {
-    const thumbnailPath = fileManager.saveImage(req.user, title, thumbnail);
-    const contentPath = fileManager.saveDocument(req.user, title, content);
+    const thumbnailpath = fileManager.saveImage(req.user, title, thumbnail);
+    const contentpath = fileManager.saveDocument(req.user, title, content);
     await DB_POOL.query(
       ` 
-    INSERT INTO post (author, title, tags, thumbnail_path, content_path)
+    INSERT INTO post (author, title, tags, thumbnailpath, contentpath)
     VALUES ($1::text, $2::text, $3::text, $4::text, $5::text)`,
-      [req.user, title, tags.join(","), thumbnailPath, contentPath],
+      [req.user, title, tags.join(","), thumbnailpath, contentpath],
     );
     res.status(200).json({ message: "Post created" });
   }
@@ -141,8 +141,8 @@ userRouter.put("/posts", authenticateToken, async (req, res) => {
     ` 
     UPDATE post SET 
     tags = $1::text,
-    thumbnail_path = $2::text,
-    content_path = $3::text
+    thumbnailpath = $2::text,
+    contentpath = $3::text
     WHERE id = $4`,
     [
       post.tags.join(","),

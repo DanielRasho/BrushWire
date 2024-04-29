@@ -6,16 +6,16 @@ class Post {
    *
    * @param {string} author
    * @param {Array.<string>} tags
-   * @param {string} publishDate
-   * @param {string} thumbnailPath server file path to post's thumbnail
-   * @param {string} contentPath server file path to post's content
+   * @param {string} publishdate
+   * @param {string} thumbnailpath server file path to post's thumbnail
+   * @param {string} contentpath server file path to post's content
    */
-  constructor(id, author, title, tags, publishDate, thumbnail, content) {
+  constructor(id, author, title, tags, publishdate, thumbnail, content) {
     this.id = id;
     this.title = title;
     this.author = author;
     this.tags = tags;
-    this.publishDate = publishDate;
+    this.publishdate = publishdate;
     this.thumbnail = thumbnail;
     this.content = content;
   }

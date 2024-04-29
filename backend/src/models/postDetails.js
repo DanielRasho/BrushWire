@@ -6,16 +6,16 @@ class PostDetails {
    *
    * @param {string} author
    * @param {Array.<string>} tags
-   * @param {string} publish_date
+   * @param {string} publishDate
    * @param {string} thumbnail_path server file path to post's thumbnail
    */
-  constructor(id, title, author, tags, publishDate, thumbnailPath) {
+  constructor(id, title, author, tags, publishdate, thumbnailpath) {
     this.id = id;
     this.author = author;
     this.title = title;
     this.tags = tags;
-    this.publishDate = publishDate;
-    this.thumbnailPath = thumbnailPath;
+    this.publishdate = publishdate;
+    this.thumbnailpath = thumbnailpath;
   }
 }
 
