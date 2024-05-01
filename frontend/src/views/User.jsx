@@ -16,6 +16,7 @@ export default function User() {
 
   const handleLoadPost = () => {
     setIsLoading(true);
+    console.log(token);
     fetch("http://localhost:3000/user/posts", {
       method: "GET",
       headers: {
@@ -72,7 +73,15 @@ export default function User() {
   };
 
   useEffect(() => {
-    handleLoadPost();
+    if (token !== "") {
+      handleLoadPost();
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (token !== "") {
+      handleLoadPost();
+    }
   }, []);
 
   return (
