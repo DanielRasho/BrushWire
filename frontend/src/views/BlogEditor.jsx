@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import EditorJS from "@editorjs/editorjs";
-import Header from "@editorjs/editorjs";
-import List from "@editorjs/editorjs";
-import Quote from "@editorjs/editorjs";
-import SimpleImage from "@editorjs/editorjs";
-import Underline from "@editorjs/editorjs";
+import Header from "@editorjs/header";
+import List from "@editorjs/list";
+import Quote from "@editorjs/quote";
+import SimpleImage from "@editorjs/simple-image";
+import Underline from "@editorjs/underline";
 import PropTypes from "prop-types";
 import TopBar from "../components/molecules/TopBar";
 import { useLocation, useNavigate } from "react-router-dom";
