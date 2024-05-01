@@ -17,9 +17,11 @@ loginRouter.post("/", async (req, res) => {
     "SELECT password FROM member WHERE username = $1::text",
     [username],
   );
-  const DBpassword = DBData.rows[0].password;
+  const DBpassword = DBData.rows[0];
 
-  if (DBpassword !== password) {
+  if (!DBpassword) {
+    res.status(401).json({ message: "User does not exist" });
+  } else if (DBpassword.password !== password) {
     res.status(401).json({ message: "Invalid username or password " });
   } else {
     res.status(200).json({
