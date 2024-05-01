@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from "react";
-import EditorJS from "@editorjs/editorjs";
-import Header from "@editorjs/editorjs";
-import List from "@editorjs/editorjs";
-import Quote from "@editorjs/editorjs";
-import SimpleImage from "@editorjs/editorjs";
-import Underline from "@editorjs/editorjs";
 import PropTypes from "prop-types";
 import TopBar from "../components/molecules/TopBar";
 import { useParams } from "react-router-dom";
+import EditorJS from "@editorjs/editorjs";
+import Header from "@editorjs/header";
+import List from "@editorjs/list";
+import Quote from "@editorjs/quote";
+import SimpleImage from "@editorjs/simple-image";
+import Underline from "@editorjs/underline";
 
 export default function Post() {
   const { id } = useParams();
@@ -16,8 +16,9 @@ export default function Post() {
   const [thumbnailURL, setThumbnailURL] = useState("");
   const [tags, setTags] = useState([]);
 
-  const titleRef = useRef();
   const editorRef = useRef(null);
+
+  const titleRef = useRef();
 
   const auto_height = () => {
     titleRef.current.style.height = "auto";
@@ -40,13 +41,13 @@ export default function Post() {
       }
 
       const post = data.post;
+
       setTitle(post.title);
       setTags(post.tags);
       setThumbnailURL(post.thumbnail);
-
-      editorInstance.isReady.then(() => {
-        editorInstance.render(JSON.parse(post.content));
-      });
+      editorInstance.isReady.then(() =>
+        editorInstance.render(JSON.parse(post.content)),
+      );
     } catch (error) {
       alert(error);
     }
@@ -55,7 +56,11 @@ export default function Post() {
   useEffect(() => {
     // EDITOR JS Instance
     const editorInstance = new EditorJS({
-      holder: "text-editor",
+      holder: "editorjs",
+      data: {},
+      readOnly: true,
+      placeholder: 'Write something, type "/" for input a command',
+      minHeight: 30,
       tools: {
         header: Header,
         list: List,
@@ -69,9 +74,9 @@ export default function Post() {
           },
         },
       },
-      placeholder: 'Write something, type "/" for input a command',
-      minHeight: 30,
     });
+
+    console.log("Executing initialization");
 
     editorRef.current = editorInstance;
 
@@ -79,6 +84,7 @@ export default function Post() {
 
     // ADD EVENT WHEN RESIZING
     window.addEventListener("resize", auto_height);
+
     return () => {
       window.removeEventListener("resize", auto_height);
       editorInstance.isReady.then(() => editorInstance.destroy());
@@ -87,7 +93,7 @@ export default function Post() {
 
   return (
     <div className="blog-editor">
-      <TopBar />
+      <TopBar></TopBar>
       <div className="metadata-editor">
         <textarea
           ref={titleRef}
@@ -115,10 +121,24 @@ export default function Post() {
           <img src={thumbnailURL} alt="" />
         </div>
       </div>
-      <div id="text-editor"></div>
+      <div id="editorjs"></div>
     </div>
   );
 }
+
+function HTMLRenderer({ htmlStrings }) {
+  return (
+    <div className="postContent">
+      {htmlStrings.map((html, index) => (
+        <div key={index} dangerouslySetInnerHTML={{ __html: html }} />
+      ))}
+    </div>
+  );
+}
+
+HTMLRenderer.propTypes = {
+  htmlStrings: PropTypes.arrayOf(PropTypes.string),
+};
 
 Post.propTypes = {
   id: PropTypes.any,

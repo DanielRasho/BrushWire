@@ -23,7 +23,7 @@ export default function TopBar({ navLinks = [] }) {
     <>
       <nav className="topBar">
         <button onClick={() => navigate("/")}>
-          <img src="./brushWireLogo.png" alt="BrushWire Logo" />
+          <img src="brushWireLogo.png" alt="BrushWire Logo" />
         </button>
         <div className="search-bar">
           <input className="search-input" type="text" placeholder="Search" />
@@ -65,7 +65,7 @@ function LoginButtons({ isLogged }) {
 }
 
 TopBar.propTypes = {
-  navLinks: Proptypes.arrayOf(Proptypes.string),
+  navLinks: Proptypes.arrayOf(Proptypes.object),
 };
 
 LoginButtons.propTypes = {

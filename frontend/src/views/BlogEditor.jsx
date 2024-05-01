@@ -168,7 +168,7 @@ export default function BlogEditor() {
 
     // EDITOR JS Instance
     const editorInstance = new EditorJS({
-      holder: "text-editor",
+      holder: "editorjs",
       data: location.state.initContent,
       placeholder: 'Write something, type "/" for input a command',
       minHeight: 30,
@@ -252,7 +252,7 @@ export default function BlogEditor() {
           />
         </div>
       </div>
-      <div id="text-editor"></div>
+      <div id="editorjs"></div>
       <div className="submit-buttons">
         <button onClick={handleDeleteDraft}>
           <span>Delete Draft</span>
