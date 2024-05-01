@@ -8,13 +8,15 @@ const AUTH_CONTEXT = createContext({
 });
 
 function OuthProvider({ children }) {
-  const [token, setOuthToken] = useState(
-    "eyJhbGciOiJIUzI1NiJ9.c21hdWc.s4z36nyTU7CWFPSnu8d5j_IHKtYR8_GCEkKrndrjENw",
-  );
+  const [token, setOuthToken] = useState("");
 
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
-    setOuthToken(savedToken);
+    if (typeof savedToken == "string") {
+      setOuthToken(savedToken);
+    } else {
+      setOuthToken("");
+    }
   }, []);
 
   useEffect(() => {

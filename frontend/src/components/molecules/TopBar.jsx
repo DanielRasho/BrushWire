@@ -8,7 +8,7 @@ import { AUTH_CONTEXT } from "../../providers/auth";
 export default function TopBar({ navLinks = [] }) {
   const navigate = useNavigate();
 
-  let isLogged = useContext(AUTH_CONTEXT).token == "" ? false : true;
+  let isLogged = useContext(AUTH_CONTEXT).token === "" ? false : true;
 
   let links = navLinks.map((navLink, index) => {
     return (
