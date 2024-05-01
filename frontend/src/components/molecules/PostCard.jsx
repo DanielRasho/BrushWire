@@ -7,12 +7,13 @@ export default function PostCard({
   title,
   tags = [],
   thumbnail,
+  onClick,
 }) {
   let displayTags = tags.map((tag) => {
     return <PostTag key={postId}>{tag}</PostTag>;
   });
   return (
-    <article className="post-card">
+    <article className="post-card" onClick={onClick}>
       <div className="post-card-info">
         <span className="date font-card-tag">{date}</span>
         <h3 className="font-card-title">{title}</h3>
@@ -31,4 +32,5 @@ PostCard.propTypes = {
   title: Proptypes.string,
   tags: Proptypes.arrayOf(Proptypes.string),
   thumbnail: Proptypes.string,
+  onClick: Proptypes.func,
 };

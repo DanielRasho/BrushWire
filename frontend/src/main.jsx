@@ -5,6 +5,7 @@ import Login from "./views/Login";
 import SignUp from "./views/SignUp";
 import User from "./views/User";
 import BlogEditor from "./views/BlogEditor";
+import Post from "./views/Post";
 import { OuthProvider } from "./providers/auth";
 
 const ROUTER = createBrowserRouter([
@@ -27,6 +28,10 @@ const ROUTER = createBrowserRouter([
   {
     path: "/blogeditor",
     element: <BlogEditor />,
+  },
+  {
+    path: "/post/:id",
+    element: <Post />,
   },
 ]);
 

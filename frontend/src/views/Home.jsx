@@ -4,10 +4,11 @@ import ErrorLoading from "../components/atoms/ErrorLoading";
 import Loader from "../components/atoms/Loader";
 import PostCard from "../components/molecules/PostCard";
 import TopBar from "../components/molecules/TopBar";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import formatDate from "../helpers/dateFormat";
 
 export default function Home() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [postsInfo, setPostsInfo] = useState([]);
@@ -24,7 +25,6 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    console.log("HELLO");
     setIsLoading(true);
     fetch("http://localhost:3000/", {
       method: "get",
@@ -71,6 +71,9 @@ export default function Home() {
               title={post.title}
               tags={post.tags}
               thumbnail={post.thumbnailpath}
+              onClick={() => {
+                navigate(`/post/${post.id}`);
+              }}
             ></PostCard>
           );
         })}
