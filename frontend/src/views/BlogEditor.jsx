@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import TopBar from "../components/molecules/TopBar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AUTH_CONTEXT } from "../providers/auth";
+import isObjectEmpty from "../helpers/emptyObject";
 
 export default function BlogEditor() {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ export default function BlogEditor() {
     setTags(tags.filter((tag) => tag !== id));
   };
 
-  const handleFileChange = (e) => {
+  const handleChangeImage = (e) => {
     if (e.target.files) {
       const thumbnailImage = e.target.files[0];
       setThumbnail(thumbnailImage);
@@ -90,7 +91,7 @@ export default function BlogEditor() {
         }),
       }).then(() => navigate("/user"));
     } catch (error) {
-      console.log("something went wrong");
+      console.log("Something went wrong.");
     }
   };
 
@@ -121,9 +122,18 @@ export default function BlogEditor() {
     let content = await editorRef.current.save();
     let thumbnailBase64;
 
+    console.log(isObjectEmpty(thumbnail));
+
     // eslint-disable-next-line no-extra-boolean-cast
-    if (!!thumbnail) {
-      console.log(thumbnail);
+    if (isObjectEmpty(thumbnail)) {
+      // If thumbnail is empty, means, the user did not change the existing image.
+      if (editMode) {
+        // Double security check
+        edit(thumbnailURL, content);
+      } else {
+        publish(thumbnailURL, content);
+      }
+    } else {
       try {
         const reader = new FileReader();
 
@@ -146,15 +156,8 @@ export default function BlogEditor() {
       } catch (error) {
         console.error("Error loading file:", error);
       }
-    } else {
-      // If thumbnail is empty, proceed with further actions directly
-      if (editMode) {
-        edit(thumbnailURL, content);
-      } else {
-        publish(thumbnailURL, content);
-      }
-      navigate("/user");
     }
+    navigate("/user");
   };
 
   useEffect(() => {
@@ -242,7 +245,7 @@ export default function BlogEditor() {
           </label>
           <input
             id="thumbnail-upload"
-            onChange={handleFileChange}
+            onChange={handleChangeImage}
             type="file"
             accept="image/"
             hidden
