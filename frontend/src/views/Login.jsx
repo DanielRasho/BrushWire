@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ButtonSimple from "../components/atoms/ButtonSimple";
 import { useNavigate } from "react-router-dom";
+import { AUTH_CONTEXT } from "../providers/auth";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { setToken } = useContext(AUTH_CONTEXT);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +15,37 @@ export default function Login() {
   };
   const handlePassword = (event) => {
     setPassword(event.target.value);
+  };
+
+  const handleOnSignIn = async () => {
+    if (username.length == 0 || password.length == 0) {
+      alert("You need to feel the Username and Password Boxes");
+      return;
+    }
+    try {
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      });
+
+      const status = await response.status;
+      const data = await response.json();
+
+      if (status !== 200) {
+        alert(data.message);
+      } else {
+        setToken(data.token);
+        navigate("/");
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const backHome = () => {
@@ -51,7 +84,7 @@ export default function Login() {
           placeholder="Password"
           maxLength={30}
         />
-        <button> Sign in </button>
+        <button onClick={handleOnSignIn}> Sign in </button>
       </div>
       <div className="signup-helper">
         <span>No account yet?</span>{" "}
