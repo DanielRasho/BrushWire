@@ -8,7 +8,7 @@ import { AUTH_CONTEXT } from "../providers/auth";
 
 export default function User() {
   const navigate = useNavigate();
-  const { token } = useContext(AUTH_CONTEXT);
+  const { token, setToken } = useContext(AUTH_CONTEXT);
 
   const [postsInfo, setPostsInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -72,6 +72,14 @@ export default function User() {
     });
   };
 
+  const handleLogOut = () => {
+    let confirmLogout = confirm("Do you really want to logout");
+    if (confirmLogout) {
+      setToken("");
+      navigate("/");
+    }
+  };
+
   useEffect(() => {
     if (token !== "") {
       handleLoadPost();
@@ -99,6 +107,9 @@ export default function User() {
           <button>Profile</button>
           <button>Your Posts</button>
         </div>
+        <button className="logout-btn" onClick={handleLogOut}>
+          Logout <i className="fa-solid fa-right-from-bracket"></i>
+        </button>
       </div>
       <div className="user-display">
         <div className="profile-category" hidden></div>

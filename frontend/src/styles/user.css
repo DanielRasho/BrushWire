@@ -70,3 +70,22 @@
 .posts-container {
     padding: 0 4rem;
 }
+
+.logout-btn{
+    color: var(--orange-500);
+    align-items: flex-end;
+    font-size: 1.2rem;
+    border-bottom: 1px solid rgb(211, 211, 211);
+    height: fit-content;
+    padding: 2ch;
+    transition: all ease-in-out 0.2s;
+}
+
+.logout-btn i {
+    margin-left: 1ch;
+}
+
+.logout-btn:hover{
+    background-color: var(--orange-500);
+    color: white;
+}
