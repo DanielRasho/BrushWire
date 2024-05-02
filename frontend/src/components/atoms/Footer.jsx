@@ -1,4 +1,4 @@
-export default function Footer() {
+export default function Footer () {
   return (
     <footer>
       <div className="info">
@@ -20,5 +20,5 @@ export default function Footer() {
         <img src="./gradient-noise-purple.png" alt="" />
       </div>
     </footer>
-  );
+  )
 }

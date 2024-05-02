@@ -1,42 +1,42 @@
-import ReactDOM from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Home from "./views/Home";
-import Login from "./views/Login";
-import SignUp from "./views/SignUp";
-import User from "./views/User";
-import BlogEditor from "./views/BlogEditor";
-import Post from "./views/Post";
-import { OuthProvider } from "./providers/auth";
+import ReactDOM from 'react-dom/client'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import Home from './views/Home'
+import Login from './views/Login'
+import SignUp from './views/SignUp'
+import User from './views/User'
+import BlogEditor from './views/BlogEditor'
+import Post from './views/Post'
+import { OuthProvider } from './providers/auth'
 
 const ROUTER = createBrowserRouter([
   {
-    path: "/",
-    element: <Home />,
+    path: '/',
+    element: <Home />
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: '/login',
+    element: <Login />
   },
   {
-    path: "/signup",
-    element: <SignUp />,
+    path: '/signup',
+    element: <SignUp />
   },
   {
-    path: "/user",
-    element: <User />,
+    path: '/user',
+    element: <User />
   },
   {
-    path: "/blogeditor",
-    element: <BlogEditor />,
+    path: '/blogeditor',
+    element: <BlogEditor />
   },
   {
-    path: "/post/:id",
-    element: <Post />,
-  },
-]);
+    path: '/post/:id',
+    element: <Post />
+  }
+])
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <OuthProvider>
     <RouterProvider router={ROUTER} />
-  </OuthProvider>,
-);
+  </OuthProvider>
+)

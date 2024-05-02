@@ -3,27 +3,27 @@ module.exports = {
     browser: true,
     commonjs: true,
     es2021: true,
-    node: true,
+    node: true
   },
-  extends: ["airbnb", "prettier"],
+  extends: ['airbnb', 'prettier'],
   overrides: [
     {
       env: {
-        node: true,
+        node: true
       },
-      files: [".eslintrc.{js,cjs}"],
+      files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
-        sourceType: "script",
-      },
-    },
+        sourceType: 'script'
+      }
+    }
   ],
   parserOptions: {
-    ecmaVersion: "latest",
+    ecmaVersion: 'latest'
   },
   rules: {
-    "consistent-return": 0,
-    "no-unused-vars": 0,
-    "no-dupe-class-members": 0,
-    "class-methods-use-this": 0,
-  },
-};
+    'consistent-return': 0,
+    'no-unused-vars': 0,
+    'no-dupe-class-members': 0,
+    'class-methods-use-this': 0
+  }
+}

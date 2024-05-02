@@ -1,44 +1,44 @@
-import { useState, useEffect } from "react";
-import Footer from "../components/atoms/Footer";
-import ErrorLoading from "../components/atoms/ErrorLoading";
-import Loader from "../components/atoms/Loader";
-import PostCard from "../components/molecules/PostCard";
-import TopBar from "../components/molecules/TopBar";
-import { Navigate, useNavigate } from "react-router-dom";
-import formatDate from "../helpers/dateFormat";
-import { BASE_URL } from "../helpers/routes";
+import { useState, useEffect } from 'react'
+import Footer from '../components/atoms/Footer'
+import ErrorLoading from '../components/atoms/ErrorLoading'
+import Loader from '../components/atoms/Loader'
+import PostCard from '../components/molecules/PostCard'
+import TopBar from '../components/molecules/TopBar'
+import { Navigate, useNavigate } from 'react-router-dom'
+import formatDate from '../helpers/dateFormat'
+import { BASE_URL } from '../helpers/routes'
 
-export default function Home() {
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [postsInfo, setPostsInfo] = useState([]);
+export default function Home () {
+  const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
+  const [postsInfo, setPostsInfo] = useState([])
 
   const navLinks = [
     {
-      content: "Trending",
-      onClick: () => Navigate("/"),
+      content: 'Trending',
+      onClick: () => Navigate('/')
     },
     {
-      content: "About Us",
-      onClick: () => Navigate("/"),
-    },
-  ];
+      content: 'About Us',
+      onClick: () => Navigate('/')
+    }
+  ]
 
   useEffect(() => {
-    setIsLoading(true);
+    setIsLoading(true)
     fetch(`${BASE_URL}/`, {
-      method: "get",
-      headers: { "Content-Type": "application/json" },
+      method: 'get',
+      headers: { 'Content-Type': 'application/json' }
     })
       .then((response) => response.json())
       .then((data) => {
-        setPostsInfo(data.posts);
-        setIsLoading(false);
+        setPostsInfo(data.posts)
+        setIsLoading(false)
       })
       .catch(() => setIsError(true))
-      .finally(() => setIsLoading(false));
-  }, []);
+      .finally(() => setIsLoading(false))
+  }, [])
 
   return (
     <>
@@ -73,13 +73,13 @@ export default function Home() {
               tags={post.tags}
               thumbnail={post.thumbnailpath}
               onClick={() => {
-                navigate(`/post/${post.id}`);
+                navigate(`/post/${post.id}`)
               }}
             ></PostCard>
-          );
+          )
         })}
       </div>
       <Footer></Footer>
     </>
-  );
+  )
 }

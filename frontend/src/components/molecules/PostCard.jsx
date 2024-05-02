@@ -1,17 +1,17 @@
-import Proptypes from "prop-types";
-import PostTag from "../atoms/PostTag";
+import Proptypes from 'prop-types'
+import PostTag from '../atoms/PostTag'
 
-export default function PostCard({
+export default function PostCard ({
   postId,
   date,
   title,
   tags = [],
   thumbnail,
-  onClick,
+  onClick
 }) {
-  let displayTags = tags.map((tag) => {
-    return <PostTag key={postId}>{tag}</PostTag>;
-  });
+  const displayTags = tags.map((tag) => {
+    return <PostTag key={postId}>{tag}</PostTag>
+  })
   return (
     <article className="post-card" onClick={onClick}>
       <div className="post-card-info">
@@ -23,7 +23,7 @@ export default function PostCard({
         <img src={thumbnail} />
       </div>
     </article>
-  );
+  )
 }
 
 PostCard.propTypes = {
@@ -32,5 +32,5 @@ PostCard.propTypes = {
   title: Proptypes.string,
   tags: Proptypes.arrayOf(Proptypes.string),
   thumbnail: Proptypes.string,
-  onClick: Proptypes.func,
-};
+  onClick: Proptypes.func
+}

@@ -1,97 +1,97 @@
-import { useState, useEffect, useContext } from "react";
-import PostUserCard from "../components/molecules/PostUserCard";
-import Loader from "../components/atoms/Loader";
-import ErrorLoading from "../components/atoms/ErrorLoading";
-import formatDate from "../helpers/dateFormat";
-import { useNavigate } from "react-router-dom";
-import { AUTH_CONTEXT } from "../providers/auth";
-import { BASE_URL } from "../helpers/routes";
+import { useState, useEffect, useContext } from 'react'
+import PostUserCard from '../components/molecules/PostUserCard'
+import Loader from '../components/atoms/Loader'
+import ErrorLoading from '../components/atoms/ErrorLoading'
+import formatDate from '../helpers/dateFormat'
+import { useNavigate } from 'react-router-dom'
+import { AUTH_CONTEXT } from '../providers/auth'
+import { BASE_URL } from '../helpers/routes'
 
-export default function User() {
-  const navigate = useNavigate();
-  const { token, setToken } = useContext(AUTH_CONTEXT);
+export default function User () {
+  const navigate = useNavigate()
+  const { token, setToken } = useContext(AUTH_CONTEXT)
 
-  const [postsInfo, setPostsInfo] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [postsInfo, setPostsInfo] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
 
   const handleLoadPost = () => {
-    setIsLoading(true);
-    console.log(token);
+    setIsLoading(true)
+    console.log(token)
     fetch(`${BASE_URL}/user/posts`, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
+        'Content-Type': 'application/json',
+        Authorization: token
+      }
     })
       .then((response) => response.json())
       .then((data) => {
-        setPostsInfo([]);
-        setPostsInfo(data.posts);
-        setIsLoading(false);
+        setPostsInfo([])
+        setPostsInfo(data.posts)
+        setIsLoading(false)
       })
       .catch(() => setIsError(true))
-      .finally(() => setIsLoading(false));
-  };
+      .finally(() => setIsLoading(false))
+  }
 
   const handleDeletePost = (id) => {
-    let confirmation = window.confirm(
-      "Do you really want to delete this post?",
-    );
+    const confirmation = window.confirm(
+      'Do you really want to delete this post?'
+    )
     if (confirmation) {
       fetch(`${BASE_URL}/user/posts/${id}`, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }).then(() => handleLoadPost());
+          'Content-Type': 'application/json',
+          Authorization: token
+        }
+      }).then(() => handleLoadPost())
     }
-  };
+  }
 
   const handleEditPost = async (id) => {
     const response = await fetch(`${BASE_URL}/user/posts/${id}`, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
-    const data = await response.json();
-    const post = data.post;
+        'Content-Type': 'application/json',
+        Authorization: token
+      }
+    })
+    const data = await response.json()
+    const post = data.post
 
-    navigate("/blogeditor", {
+    navigate('/blogeditor', {
       state: {
-        mode: "edit",
+        mode: 'edit',
         id: post.id,
         initTitle: post.title,
         initTags: post.tags,
         initThumbnail: post.thumbnail,
-        initContent: JSON.parse(post.content),
-      },
-    });
-  };
+        initContent: JSON.parse(post.content)
+      }
+    })
+  }
 
   const handleLogOut = () => {
-    let confirmLogout = confirm("Do you really want to logout");
+    const confirmLogout = confirm('Do you really want to logout')
     if (confirmLogout) {
-      setToken("");
-      navigate("/");
+      setToken('')
+      navigate('/')
     }
-  };
+  }
 
   useEffect(() => {
-    if (token !== "") {
-      handleLoadPost();
+    if (token !== '') {
+      handleLoadPost()
     }
-  }, [token]);
+  }, [token])
 
   useEffect(() => {
-    if (token !== "") {
-      handleLoadPost();
+    if (token !== '') {
+      handleLoadPost()
     }
-  }, []);
+  }, [])
 
   return (
     <div className="user-dashboard">
@@ -99,7 +99,7 @@ export default function User() {
         <div
           className="logo-container"
           onClick={() => {
-            navigate("/");
+            navigate('/')
           }}
         >
           <img src="./brushWireLogo.png" alt="logo" />
@@ -120,7 +120,7 @@ export default function User() {
             <button
               className="write-btn font-btn-confirmation"
               onClick={() =>
-                navigate("/blogeditor", { state: { mode: "create" } })
+                navigate('/blogeditor', { state: { mode: 'create' } })
               }
             >
               <span>Write</span>
@@ -150,11 +150,11 @@ export default function User() {
                   onEdit={() => handleEditPost(post.id)}
                   onClick={() => navigate(`/post/${post.id}`)}
                 ></PostUserCard>
-              );
+              )
             })}
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

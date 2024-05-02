@@ -11,14 +11,14 @@ class Post {
    * @param {string} contentpath server file path to post's content
    */
   constructor(id, author, title, tags, publishdate, thumbnail, content) {
-    this.id = id;
-    this.title = title;
-    this.author = author;
-    this.tags = tags;
-    this.publishdate = publishdate;
-    this.thumbnail = thumbnail;
-    this.content = content;
+    this.id = id
+    this.title = title
+    this.author = author
+    this.tags = tags
+    this.publishdate = publishdate
+    this.thumbnail = thumbnail
+    this.content = content
   }
 }
 
-module.exports = Post;
+module.exports = Post

@@ -1,175 +1,175 @@
-import { useState, useRef, useEffect, useContext } from "react";
-import EditorJS from "@editorjs/editorjs";
-import Header from "@editorjs/header";
-import List from "@editorjs/list";
-import Quote from "@editorjs/quote";
-import SimpleImage from "@editorjs/simple-image";
-import Underline from "@editorjs/underline";
-import PropTypes from "prop-types";
-import TopBar from "../components/molecules/TopBar";
-import { useLocation, useNavigate } from "react-router-dom";
-import { AUTH_CONTEXT } from "../providers/auth";
-import isObjectEmpty from "../helpers/emptyObject";
-import { BASE_URL } from "../helpers/routes";
+import { useState, useRef, useEffect, useContext } from 'react'
+import EditorJS from '@editorjs/editorjs'
+import Header from '@editorjs/header'
+import List from '@editorjs/list'
+import Quote from '@editorjs/quote'
+import SimpleImage from '@editorjs/simple-image'
+import Underline from '@editorjs/underline'
+import PropTypes from 'prop-types'
+import TopBar from '../components/molecules/TopBar'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { AUTH_CONTEXT } from '../providers/auth'
+import isObjectEmpty from '../helpers/emptyObject'
+import { BASE_URL } from '../helpers/routes'
 
-export default function BlogEditor() {
-  const navigate = useNavigate();
-  const location = useLocation();
+export default function BlogEditor () {
+  const navigate = useNavigate()
+  const location = useLocation()
 
-  const { token } = useContext(AUTH_CONTEXT);
+  const { token } = useContext(AUTH_CONTEXT)
 
-  const [id, setId] = useState(undefined);
-  const [title, setTitle] = useState("");
-  const [thumbnailURL, setThumbnailURL] = useState("");
-  const [tags, setTags] = useState([]);
-  const [tagInput, setTagInput] = useState("");
-  const [thumbnail, setThumbnail] = useState({});
+  const [id, setId] = useState(undefined)
+  const [title, setTitle] = useState('')
+  const [thumbnailURL, setThumbnailURL] = useState('')
+  const [tags, setTags] = useState([])
+  const [tagInput, setTagInput] = useState('')
+  const [thumbnail, setThumbnail] = useState({})
 
-  const [editMode] = useState(location.state.mode === "edit" ? true : false);
+  const [editMode] = useState(location.state.mode === 'edit')
 
-  const MAX_TAGS = 3;
+  const MAX_TAGS = 3
 
-  const titleRef = useRef();
-  const editorRef = useRef(null);
+  const titleRef = useRef()
+  const editorRef = useRef(null)
 
-  const auto_height = () => {
-    titleRef.current.style.height = "auto";
-    titleRef.current.style.height = titleRef.current.scrollHeight + "px";
-  };
+  const autoHeight = () => {
+    titleRef.current.style.height = 'auto'
+    titleRef.current.style.height = titleRef.current.scrollHeight + 'px'
+  }
 
   const handleTitleInput = (event) => {
-    if (editMode == false) setTitle(event.target.value);
-  };
+    if (editMode === false) setTitle(event.target.value)
+  }
 
   const handleTagInput = (event) => {
-    setTagInput(event.target.value);
-  };
+    setTagInput(event.target.value)
+  }
 
   const handleCreateTag = (event) => {
     if (
-      event.key == "Enter" &&
+      event.key === 'Enter' &&
       !tags.includes(tagInput) &&
       tags.length < MAX_TAGS
     ) {
-      setTags([...tags, tagInput]);
-      setTagInput("");
+      setTags([...tags, tagInput])
+      setTagInput('')
     }
-  };
+  }
 
   const handleDeleteTag = (id) => {
-    console.log(id);
-    setTags(tags.filter((tag) => tag !== id));
-  };
+    console.log(id)
+    setTags(tags.filter((tag) => tag !== id))
+  }
 
   const handleChangeImage = (e) => {
     if (e.target.files) {
-      const thumbnailImage = e.target.files[0];
-      setThumbnail(thumbnailImage);
-      setThumbnailURL(URL.createObjectURL(thumbnailImage));
+      const thumbnailImage = e.target.files[0]
+      setThumbnail(thumbnailImage)
+      setThumbnailURL(URL.createObjectURL(thumbnailImage))
     }
-  };
+  }
 
   const handleDeleteDraft = () => {
-    let confirmation = window.confirm(
-      "Do you really want to delete your draft?",
-    );
-    if (confirmation) navigate("/user");
-  };
+    const confirmation = window.confirm(
+      'Do you really want to delete your draft?'
+    )
+    if (confirmation) navigate('/user')
+  }
 
   const publish = (image64, content) => {
     try {
       fetch(`${BASE_URL}/user/posts`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
+          'Content-Type': 'application/json',
+          Authorization: token
         },
         body: JSON.stringify({
-          title: title,
-          tags: tags,
+          title,
+          tags,
           thumbnail: image64,
-          content: JSON.stringify(content),
-        }),
-      }).then(() => navigate("/user"));
+          content: JSON.stringify(content)
+        })
+      }).then(() => navigate('/user'))
     } catch (error) {
-      console.log("Something went wrong.");
+      console.log('Something went wrong.')
     }
-  };
+  }
 
   const edit = (image64, content) => {
     try {
       fetch(`${BASE_URL}/user/posts`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
+          'Content-Type': 'application/json',
+          Authorization: token
         },
         body: JSON.stringify({
-          id: id,
-          title: title,
-          tags: tags,
+          id,
+          title,
+          tags,
           thumbnail: image64,
-          content: JSON.stringify(content),
-        }),
+          content: JSON.stringify(content)
+        })
       })
         .then((response) => response.json())
-        .then((data) => console.log(data));
+        .then((data) => console.log(data))
     } catch (error) {
-      console.log("something went wrong");
+      console.log('something went wrong')
     }
-  };
+  }
 
   const handleSendPost = async () => {
-    let content = await editorRef.current.save();
-    let thumbnailBase64;
+    const content = await editorRef.current.save()
+    let thumbnailBase64
 
-    console.log(isObjectEmpty(thumbnail));
+    console.log(isObjectEmpty(thumbnail))
 
     // eslint-disable-next-line no-extra-boolean-cast
     if (isObjectEmpty(thumbnail)) {
       // If thumbnail is empty, means, the user did not change the existing image.
       if (editMode) {
         // Double security check
-        edit(thumbnailURL, content);
+        edit(thumbnailURL, content)
       } else {
-        publish(thumbnailURL, content);
+        publish(thumbnailURL, content)
       }
     } else {
       try {
-        const reader = new FileReader();
+        const reader = new FileReader()
 
         reader.onload = () => {
-          thumbnailBase64 = reader.result;
-          console.log(thumbnailBase64); // Log the thumbnailBase64 here to ensure it's properly assigned
+          thumbnailBase64 = reader.result
+          console.log(thumbnailBase64) // Log the thumbnailBase64 here to ensure it's properly assigned
           // Once thumbnailBase64 is assigned, proceed with further actions
           if (editMode) {
-            edit(thumbnailBase64, content);
+            edit(thumbnailBase64, content)
           } else {
-            publish(thumbnailBase64, content);
+            publish(thumbnailBase64, content)
           }
-        };
+        }
 
         reader.onerror = (error) => {
-          console.error("Error loading file:", error);
-        };
+          console.error('Error loading file:', error)
+        }
 
-        await reader.readAsDataURL(thumbnail);
+        await reader.readAsDataURL(thumbnail)
       } catch (error) {
-        console.error("Error loading file:", error);
+        console.error('Error loading file:', error)
       }
     }
-    navigate("/user");
-  };
+    navigate('/user')
+  }
 
   useEffect(() => {
-    setId(location.state.id || undefined);
-    setTitle(location.state.initTitle || "");
-    setThumbnailURL(location.state.initThumbnail || "");
-    setTags(location.state.initTags || []);
+    setId(location.state.id || undefined)
+    setTitle(location.state.initTitle || '')
+    setThumbnailURL(location.state.initThumbnail || '')
+    setTags(location.state.initTags || [])
 
     // EDITOR JS Instance
     const editorInstance = new EditorJS({
-      holder: "editorjs",
+      holder: 'editorjs',
       data: location.state.initContent,
       placeholder: 'Write something, type "/" for input a command',
       minHeight: 30,
@@ -181,24 +181,24 @@ export default function BlogEditor() {
         quote: {
           class: Quote,
           config: {
-            quotePlaceholder: "Enter a quote",
-            captionPlaceholder: "Quote's author",
-          },
-        },
-      },
-    });
+            quotePlaceholder: 'Enter a quote',
+            captionPlaceholder: "Quote's author"
+          }
+        }
+      }
+    })
 
-    console.log("Executing initialization");
+    console.log('Executing initialization')
 
-    editorRef.current = editorInstance;
+    editorRef.current = editorInstance
 
     // ADD EVENT WHEN RESIZING
-    window.addEventListener("resize", auto_height);
+    window.addEventListener('resize', autoHeight)
     return () => {
-      window.removeEventListener("resize", auto_height);
-      editorInstance.isReady.then(() => editorInstance.destroy());
-    };
-  }, []);
+      window.removeEventListener('resize', autoHeight)
+      editorInstance.isReady.then(() => editorInstance.destroy())
+    }
+  }, [])
 
   return (
     <div className="blog-editor">
@@ -207,14 +207,14 @@ export default function BlogEditor() {
         <textarea
           ref={titleRef}
           value={title}
-          onInput={auto_height}
+          onInput={autoHeight}
           onChange={handleTitleInput}
           className="title"
           type="textarea"
           placeholder="Title here..."
           maxLength={45}
           readOnly={editMode}
-          style={{ cursor: editMode ? "default" : "text" }}
+          style={{ cursor: editMode ? 'default' : 'text' }}
         />
         <div className="tag-container">
           <input
@@ -234,7 +234,7 @@ export default function BlogEditor() {
                     className="fa-solid fa-xmark"
                   ></i>
                 </span>
-              );
+              )
             })}
           </div>
         </div>
@@ -260,12 +260,12 @@ export default function BlogEditor() {
           <i className="fa-solid fa-trash-can"></i>
         </button>
         <button onClick={handleSendPost}>
-          <span>{editMode ? "Edit" : "Post"}</span>
+          <span>{editMode ? 'Edit' : 'Post'}</span>
           <i className="fa-solid fa-paper-plane"></i>
         </button>
       </div>
     </div>
-  );
+  )
 }
 
 BlogEditor.propTypes = {
@@ -273,5 +273,5 @@ BlogEditor.propTypes = {
   initTitle: PropTypes.string,
   initTags: PropTypes.arrayOf(PropTypes.string),
   initThumbnail: PropTypes.string,
-  initContent: PropTypes.object,
-};
+  initContent: PropTypes.object
+}
