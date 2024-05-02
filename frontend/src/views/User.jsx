@@ -5,6 +5,7 @@ import ErrorLoading from "../components/atoms/ErrorLoading";
 import formatDate from "../helpers/dateFormat";
 import { useNavigate } from "react-router-dom";
 import { AUTH_CONTEXT } from "../providers/auth";
+import { BASE_URL } from "../helpers/routes";
 
 export default function User() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function User() {
   const handleLoadPost = () => {
     setIsLoading(true);
     console.log(token);
-    fetch("http://localhost:3000/user/posts", {
+    fetch(`${BASE_URL}/user/posts`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +40,7 @@ export default function User() {
       "Do you really want to delete this post?",
     );
     if (confirmation) {
-      fetch(`http://localhost:3000/user/posts/${id}`, {
+      fetch(`${BASE_URL}/user/posts/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +51,7 @@ export default function User() {
   };
 
   const handleEditPost = async (id) => {
-    const response = await fetch(`http://localhost:3000/user/posts/${id}`, {
+    const response = await fetch(`${BASE_URL}/user/posts/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

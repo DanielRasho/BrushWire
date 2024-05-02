@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import ButtonSimple from "../components/atoms/ButtonSimple";
 import { useNavigate } from "react-router-dom";
 import { AUTH_CONTEXT } from "../providers/auth";
+import { BASE_URL } from "../helpers/routes";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ export default function Login() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch(`${BASE_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

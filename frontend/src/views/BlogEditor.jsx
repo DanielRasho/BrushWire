@@ -10,6 +10,7 @@ import TopBar from "../components/molecules/TopBar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AUTH_CONTEXT } from "../providers/auth";
 import isObjectEmpty from "../helpers/emptyObject";
+import { BASE_URL } from "../helpers/routes";
 
 export default function BlogEditor() {
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ export default function BlogEditor() {
 
   const publish = (image64, content) => {
     try {
-      fetch("http://localhost:3000/user/posts", {
+      fetch(`${BASE_URL}/user/posts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +98,7 @@ export default function BlogEditor() {
 
   const edit = (image64, content) => {
     try {
-      fetch("http://localhost:3000/user/posts", {
+      fetch(`${BASE_URL}/user/posts`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

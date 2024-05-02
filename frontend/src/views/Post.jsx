@@ -8,6 +8,7 @@ import List from "@editorjs/list";
 import Quote from "@editorjs/quote";
 import SimpleImage from "@editorjs/simple-image";
 import Underline from "@editorjs/underline";
+import { BASE_URL } from "../helpers/routes";
 
 export default function Post() {
   const { id } = useParams();
@@ -27,7 +28,7 @@ export default function Post() {
 
   const handleFetchPost = async (id, editorInstance) => {
     try {
-      const response = await fetch(`http://localhost:3000/post/${id}`, {
+      const response = await fetch(`${BASE_URL}/post/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

@@ -6,6 +6,7 @@ import PostCard from "../components/molecules/PostCard";
 import TopBar from "../components/molecules/TopBar";
 import { Navigate, useNavigate } from "react-router-dom";
 import formatDate from "../helpers/dateFormat";
+import { BASE_URL } from "../helpers/routes";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function Home() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:3000/", {
+    fetch(`${BASE_URL}/`, {
       method: "get",
       headers: { "Content-Type": "application/json" },
     })
