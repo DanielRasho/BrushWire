@@ -8,6 +8,7 @@ export default function PostUserCard({
   thumbnail,
   onDelete,
   onEdit,
+  onClick,
 }) {
   let displayTags = tags.map((tag, index) => {
     return <PostTag key={index}>{tag}</PostTag>;
@@ -18,7 +19,7 @@ export default function PostUserCard({
       <div className="image-container">
         <img src={thumbnail} />
       </div>
-      <div className="post-user-card-info">
+      <div className="post-user-card-info" onClick={onClick}>
         <div className="info">
           <span>{date}</span>
           <h3>{title}</h3>
@@ -45,4 +46,5 @@ PostUserCard.propTypes = {
   thumbnail: Proptypes.string,
   onDelete: Proptypes.func,
   onEdit: Proptypes.func,
+  onClick: Proptypes.func,
 };

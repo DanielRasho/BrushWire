@@ -147,6 +147,7 @@ export default function User() {
                   thumbnail={post.thumbnailpath}
                   onDelete={() => handleDeletePost(post.id)}
                   onEdit={() => handleEditPost(post.id)}
+                  onClick={() => navigate(`/post/${post.id}`)}
                 ></PostUserCard>
               );
             })}

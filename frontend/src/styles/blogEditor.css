@@ -91,8 +91,10 @@
     margin-top: 1rem;
 }
 
-#text-editor {
+#editorjs {
     font-size: 1.15rem;
+    margin-bottom: 20vh;
+    padding: 2rem;
 }
 
 .submit-buttons{

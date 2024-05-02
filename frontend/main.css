@@ -177,6 +177,7 @@ box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     margin-left: 3ch;
     width: 100%;
     justify-content: space-between;
+    cursor: pointer;
 }
 
 .post-user-card .image-container {
