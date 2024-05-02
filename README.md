@@ -6,7 +6,9 @@
 
 Made with [Node.js](https://nodejs.org/en) , [React](https://es.react.dev/) and [Docker](https://www.docker.com/)
 
-🔴 **Live API:** Doing..
+🔴 **Live API:** [Right here ](http://18.116.43.163:81/)
+
+![](./Demo.gif)
 
 Made with 💚 by Daniel Rayo
 
@@ -16,7 +18,7 @@ Made with 💚 by Daniel Rayo
 
 ### Backend 🔌
 
-1. **Create the DB:** The backend requires a functional Docker Container with postgres, for that, use docker compose as follow.</u>
+1. **Create the DB and API:** The backend requires 2 functional Docker Container with postgres and node, for that, use docker compose as follow.</u>
    
    ```bash
    docker compose up // Creates containers and start it
@@ -31,7 +33,7 @@ Made with 💚 by Daniel Rayo
    yarn install   # if using yarn
    ```
 
-3. **Set environment variables:** The API extract important configuration from environment variables declared in a `.env` file. Create one within /backend directory with this variables. You can change them to your like.
+3. **Set environment variables:** The API extract important configuration from environment variables declared in a `.env` file. Create one within `/backend` directory with this variables. You can change them to your like.
    
    ```bash
    PORT=3000
@@ -40,7 +42,7 @@ Made with 💚 by Daniel Rayo
    STORE_DIR='/path/to/folder/where/blog/files/are/stored'
    ```
 
-4. **Start API:** Finally you can start the API service by executing:
+4. **Start API:** Finally you can start the API for DEVELOPMENT by executing:
    
    ```bash
    npm start      # if using npm
@@ -51,6 +53,17 @@ Made with 💚 by Daniel Rayo
 
 ### Frontend 💫
 
-For now the only way to preview the frontend. Is by running liveServer extension within `./frontend/index.html` 
+The frontend layer is requires less steps for getting started, and requires you to be on the `/frontend` directory.
 
-> Its a work in progress...
+- **For development** : Create a dev server with vite
+  
+  ```bash
+  npm run dev
+  ```
+
+- **For production** : 
+  
+  ```bash
+  npm run build
+  npm run preview #(optional) 
+  ```
